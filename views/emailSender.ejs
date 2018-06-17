@@ -16,6 +16,8 @@
 <header>
   <div class="jumbotron">
     <h2><%= title %></h2>
+    <p><%= subtitle %></p>
+
     <p><%= body %></p>
 
 
@@ -37,13 +39,30 @@
               </div>
             </div>
 
-            <!-- <div class="row">
+           <div class="row">
               <div class="col-md-4"></div>
                 <div class="form-group col-md-4">
                   <label for="body">Body:</label>
                   <textarea cols="5" rows="5"class="form-control" name="body"></textarea>
                 </div>
-            </div> -->
+            </div>
+
+            <div class="row">
+               <div class="col-md-4"></div>
+                 <div class="form-group col-md-4">
+                   <label for="template">Email template:</label>
+                   <select  name="template">
+                    <option value="email_space.ejs">Space</option>
+                    <option value="email_unicorn.ejs">Unicorn</option>
+                    <option value="email_letter.ejs">Letter</option>
+
+                    </select>
+                  </div>
+             </div>
+
+
+
+
             <div class="row">
               <div class="col-md-4"></div>
               <div class="form-group col-md-4">

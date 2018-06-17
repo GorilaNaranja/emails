@@ -1,7 +1,4 @@
-const port = process.env.PORT || 3000;
-const url = process.env.URL || "localhost";
-const myEmail = process.env.EMAIL;
-const myPassword = process.env.PASSWORD;
+var config = require('./config.js');
 
 //EXPRESS Web service
 var express = require("express");
@@ -16,70 +13,54 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.listen(port, function() {
-  console.log("Server running on http://" + url + ":" + port);
+app.listen(config.port, function() {
+  console.log("Server running on " + config.url + ":" + config.port);
 });
 
 //Routes
 app.get("/", function(req, res) {
   res.render("index", {
-    title: "Home",
-    body: "Text in my home page. I hope you enjoy it."
+    title: config.homeOptions.title,
+    subtitle:config.homeOptions.subtitle,
+    body: config.homeOptions.body
   });
 });
 
 app.get("/json", function(req, res) {
-  var dog = {
-    head: {
-      eyes: 2,
-      color: "brown"
-    },
-    body: {
-      legs: {
-        number: 4,
-        color: "white",
-        weight: "15 Kg"
-      },
-      tail: {
-        size: "short",
-        color: "black"
-      }
-    }
-  };
   res.render("index", {
-    title: "My dog Json",
-    body: JSON.stringify(dog, null, 4)
+    title: config.dogJsonOptions.title,
+    subtitle:config.dogJsonOptions.subtitle,
+    body: JSON.stringify(config.dogJsonOptions.dog, null, 4)
   });
 });
 
 app.get("/email", function(req, res) {
   res.render("emailSender", {
     title: "Email sender",
+    subtitle: "Pleas send an email",
     body: ""
+
   });
 });
 
 app.post("/send", function(req, res, next) {
-  console.log("req", req.body);
-
   let transporter = nodeMailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
-      user: "myPassword",
-      pass: "myEmail"
+      user: config.myEmail,
+      pass: config.myPassword
     }
   });
 
-  var templateString = fs.readFileSync("./views/email.ejs", "utf-8");
-  let html = ejs.render(templateString, { text: req.body.body });
+  let templateString = fs.readFileSync("./views/templates/"+req.body.template, "utf-8");
+  let html = ejs.render(templateString, {text:req.body.body,});
 
   let mailOptions = {
-    from: '"Gorila Naranja" <gorillanaranja@gmail.com>', // sender address
-    to: req.body.to, // list of receivers
-    subject: req.body.subject, // Subject line
-    text: req.body.body, // plain text body
+    from: '"Gorila Naranja" <gorillanaranja@gmail.com>',
+    to: req.body.to,
+    subject: req.body.subject,
     html: html
   };
 
@@ -87,7 +68,12 @@ app.post("/send", function(req, res, next) {
     if (error) {
       return console.log(error);
     }
-    console.log("Message %s sent: %s", info.messageId, info.response);
-    res.render("email");
+    console.log("Message sent to: " + req.body.to);
+    res.render("index", {
+      title: "Successfully!",
+      subtitle: "",
+      body: "Message sent to " + req.body.to
+    });
   });
+
 });
