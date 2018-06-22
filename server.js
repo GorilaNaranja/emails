@@ -26,12 +26,12 @@ app.get("/", function(req, res) {
   });
 });
 
-app.get("/json", function(req, res) {
+app.get("/how", function(req, res) {
   res.render("index", {
-    title: config.dogJsonOptions.title,
-    subtitle:config.dogJsonOptions.subtitle,
-    body: JSON.stringify(config.dogJsonOptions.dog, null, 4)
-  });
+    title: config.how.title,
+    subtitle:config.how.subtitle,
+    body: config.how.body
+  })
 });
 
 app.get("/email", function(req, res) {

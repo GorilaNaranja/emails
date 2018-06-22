@@ -10,32 +10,14 @@ module.exports = {
   url: process.env.URL || 'http://localhost',
   myEmail : process.env.EMAIL,
   myPassword : process.env.PASSWORD,
-  dogJsonOptions:{
-    title:"Stringifying my dog",
-    subtitle: 'This is my example Json dog.',
-    body:"",
-    dog : {
-      head: {
-        eyes: 2,
-        color: "brown"
-      },
-      body: {
-        legs: {
-          number: 4,
-          color: "white",
-          weight: "15 Kg"
-        },
-        tail: {
-          size: "short",
-          color: "black"
-        }
-      }
-  }
-
+  how:{
+    title:"",
+    subtitle: 'How is the email sent?',
+    body:"We use Nodemailer, a module for Node.js applications to send emails. For more information visit its official website or check my github in the link below."
   },
   homeOptions: {
-    title: 'HOME',
-    subtitle: 'What is this page?',
-    body: 'This is an example about how to rendering ejs files in server. We are available to render ejs and send it automatically by email using nodemailer. You are looking my index.ejs, formed by header.ejs, main.ejs (where are this message) and footer.ejs.'
+    title: 'WELCOME',
+    subtitle: 'What is this?',
+    body: 'This is an example of a simple api that renders views on the server and allows you to send emails. You can choose three different templates and customize the recipient, the subject and the text of your email. Do not forget to put your environment variables EMAIL and PASSWORD to define the outgoing email.',
   }
 };
